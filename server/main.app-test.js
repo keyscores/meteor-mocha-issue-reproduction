@@ -1,9 +1,9 @@
 import Future from 'fibers/future';
 import chai from 'chai';
 
-describe('False positive in async methods', function (  ) {
-  it('setTimeout: this is a correct passing test.', function (done) {
-    Meteor.call('workingSetTimeout', function(err, res){
+describe('False positive when using futures', function (  ) {
+  it('Reference Sync: this is a true passing test.', function (done) {
+    Meteor.call('syncMethod', function(err, res){
       if (err){
         console.log("error: ", err);
         chai.assert.strictEqual( 1, 2 )
@@ -15,10 +15,10 @@ describe('False positive in async methods', function (  ) {
     });
   });
 
-  it('setTimeout with futures: this leads to false positive, the method is broken.', function (done) {
+  it('Broken sync: with futures it leads to false positive, the method is broken.', function (done) {
     var fut = new Future();
 
-    Meteor.call('brokenSetTimeout', function(err, res){
+    Meteor.call('brokenSyncMethod', function(err, res){
       if ( err ){
         fut.return(err);
 
@@ -35,12 +35,11 @@ describe('False positive in async methods', function (  ) {
 
   });
 
-  it('Request: this is a correct passing test.', function (done) {
-    Meteor.call('correctRequest', function(err, res){
+  it('Reference Async: this is a true passing test.', function (done) {
+    Meteor.call('asyncMethod', function(err, res){
       if (err){
         console.log("error: ", err);
         chai.assert.strictEqual( 1, 2 )
-
       }else{
         console.log('result: ', res);
         chai.assert.strictEqual( res.foo, 'Hello World' )
@@ -49,10 +48,10 @@ describe('False positive in async methods', function (  ) {
     });
   });
 
-  it('Request with futures: this is false positive, the method is broken.', function (done) {
+  it('Broken Async: with futures it leads to false positive, the method is broken.', function (done) {
     var fut = new Future();
 
-    Meteor.call('brokenRequest', function(err, res){
+    Meteor.call('brokenAsyncMethod', function(err, res){
       if ( err ){
         fut.return(err);
 
@@ -65,13 +64,16 @@ describe('False positive in async methods', function (  ) {
 
     var result  = fut.wait();
     chai.assert.equal( result.foo, 'Hello World')
+
+
   });
+
 });
 
 describe('Assertion failing in callback, shows timeout error.', function (  ) {
 
   it('setTimeout: this is a correct passing test.', function (done) {
-    Meteor.call('workingSetTimeout', function(err, res){
+    Meteor.call('asyncMethod', function(err, res){
       if (err){
         console.log("error: ", err);
         chai.assert.strictEqual( 1, 2 )
@@ -85,7 +87,7 @@ describe('Assertion failing in callback, shows timeout error.', function (  ) {
   });
 
   it('practical meteor timeout instead of reporting error.', function (done) {
-    Meteor.call('workingSetTimeout', function(err, res){
+    Meteor.call('asyncMethod', function(err, res){
       if (err){
         console.log("error: ", err);
          chai.assert.strictEqual( 1, 2 )
