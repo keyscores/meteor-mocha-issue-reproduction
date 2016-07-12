@@ -1,6 +1,6 @@
 # meteor-mocha-issue-repro
 
-- Reproducing issues with practicalmeteor:mocha package
+Reproducing issues with practicalmeteor:mocha package
 
 1. Issue with false positives in web UI reporter on failing async methods.
   - Two sets of examples: a trivial setTimout issue, and a more relevant http Request.
