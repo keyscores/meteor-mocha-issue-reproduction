@@ -8,7 +8,7 @@ Meteor.methods({
     var fut = new Future();
 
     Meteor.setTimeout(function(){
-       fut.return({ foo: 'Hello Word'});
+       fut.return({ foo: 'Hello World'});
     }, 500);
 
     return fut.wait();
@@ -20,7 +20,7 @@ Meteor.methods({
 
     //TODO: BUG: replace typo Meteo for Meteor
     Meteo.setTimeout(function(){
-       fut.return({ foo: 'Hello Word'});
+       fut.return({ foo: 'Hello World'});
     }, 500);
 
     return fut.wait();
@@ -34,7 +34,7 @@ Meteor.methods({
     Request({
       method: 'GET',
       json: true,
-      uri: 'http://mockbin.org/bin/bbe7f656-12d6-4877-9fa8-5cd61f9522a9'
+      uri: 'http://mockbin.org/bin/7c895090-701d-4bed-b2c6-63a60b45c574'
     })
      .then(function (response) {
         //  console.log(response)
@@ -50,7 +50,7 @@ Meteor.methods({
      Request({
        method: 'GET',
        json: true,
-       uri: 'http://mockbin.org/bin/bbe7f656-12d6-4877-9fa8-5cd61f9522a9'
+       uri: 'http://mockbin.org/bin/7c895090-701d-4bed-b2c6-63a60b45c574'
      })
      ///TODO: BUG: fix type from .the to .then
       .the(function (response) {
