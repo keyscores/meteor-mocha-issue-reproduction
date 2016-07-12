@@ -1,11 +1,6 @@
 import { Meteor } from 'meteor/meteor';
-var Request = require("request-promise");
+import Request from 'request-promise';
 import Future from 'fibers/future';
-
-
-Meteor.startup(() => {
-  // code to run on server at startup
-});
 
 Meteor.methods({
   workingSetTimeout:function(){
@@ -23,6 +18,7 @@ Meteor.methods({
 
     var fut = new Future();
 
+    //TODO: BUG: replace typo Meteo for Meteor
     Meteo.setTimeout(function(){
        fut.return({ foo: 'Hello Word'});
     }, 500);
@@ -37,7 +33,7 @@ Meteor.methods({
 
     Request({
       method: 'GET',
-      json:true,
+      json: true,
       uri: 'http://mockbin.org/bin/bbe7f656-12d6-4877-9fa8-5cd61f9522a9'
     })
      .then(function (response) {
@@ -53,7 +49,7 @@ Meteor.methods({
      var fut = new Future();
      Request({
        method: 'GET',
-       json:true,
+       json: true,
        uri: 'http://mockbin.org/bin/bbe7f656-12d6-4877-9fa8-5cd61f9522a9'
      })
      ///TODO: BUG: fix type from .the to .then
