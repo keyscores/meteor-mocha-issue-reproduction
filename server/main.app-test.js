@@ -4,7 +4,6 @@ var chai   = require('chai');
 
 describe('False positive in async methods', function (  ) {
 
-
     it('setTimeout: this is a correct passing test', function (done) {
       Meteor.call('workingSetTimeout', function(err, res){
         if (err){
@@ -57,7 +56,7 @@ describe('False positive in async methods', function (  ) {
 });
 
 describe('Assertion failing in callback', function (  ) {
-  
+
   it('setTimeout: this is a correct passing test', function (done) {
     Meteor.call('workingSetTimeout', function(err, res){
       if (err){
