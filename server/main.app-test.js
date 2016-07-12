@@ -2,8 +2,21 @@ import Future from 'fibers/future';
 import chai from 'chai';
 
 describe('False positive when using futures', function (  ) {
-  it('Reference Sync: this is a true passing test.', function (done) {
+  it('Reference Sync: this is a true positive, passing test.', function (done) {
     Meteor.call('syncMethod', function(err, res){
+      if (err){
+        console.log("error: ", err);
+        chai.assert.strictEqual( 1, 2 )
+      }else{
+        console.log('result: ', res);
+        chai.assert.strictEqual( res.foo, 'Hello World' )
+      }
+      done();
+    });
+  });
+
+  it('Reference sync: this is a true negative, failing test.', function (done) {
+    Meteor.call('brokenSyncMethod', function(err, res){
       if (err){
         console.log("error: ", err);
         chai.assert.strictEqual( 1, 2 )
@@ -35,7 +48,7 @@ describe('False positive when using futures', function (  ) {
 
   });
 
-  it('Reference Async: this is a true passing test.', function (done) {
+  it('Reference Async: this is a true positive, passing test.', function (done) {
     Meteor.call('asyncMethod', function(err, res){
       if (err){
         console.log("error: ", err);
@@ -48,6 +61,19 @@ describe('False positive when using futures', function (  ) {
     });
   });
 
+
+  it('Reference Async: this is a true negative, failing test.', function (done) {
+    Meteor.call('brokenAsyncMethod', function(err, res){
+      if (err){
+        console.log("error: ", err);
+        chai.assert.strictEqual( 1, 2 )
+      }else{
+        console.log('result: ', res);
+        chai.assert.strictEqual( res.foo, 'Hello World' )
+      }
+      done();
+    });
+  });
   it('Broken Async: with futures it leads to false positive, the method is broken.', function (done) {
     var fut = new Future();
 
@@ -72,7 +98,7 @@ describe('False positive when using futures', function (  ) {
 
 describe('Assertion failing in callback, shows timeout error.', function (  ) {
 
-  it('setTimeout: this is a correct passing test.', function (done) {
+  it('Reference Async: this is a true positive, passing test.', function (done) {
     Meteor.call('asyncMethod', function(err, res){
       if (err){
         console.log("error: ", err);
@@ -86,7 +112,7 @@ describe('Assertion failing in callback, shows timeout error.', function (  ) {
     });
   });
 
-  it('practical meteor timeout instead of reporting error.', function (done) {
+  it('reports timeout instead of reporting error.', function (done) {
     Meteor.call('asyncMethod', function(err, res){
       if (err){
         console.log("error: ", err);
